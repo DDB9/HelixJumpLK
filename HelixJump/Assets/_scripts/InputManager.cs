@@ -1,12 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Hierarchy;
 using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
     public GameObject HelixOne, HelixTwo;
-    public float swipeSensitivity;
+    public float SwipeSensitivity;
 
     private Touch userInput;
 
@@ -22,8 +19,8 @@ public class InputManager : MonoBehaviour
             if (userInput.phase == TouchPhase.Moved || userInput.phase == TouchPhase.Ended)
             {
                 // Apply the rotation conform the user's swipe input (delta position).
-                HelixOne.transform.Rotate(0, -userInput.deltaPosition.x * swipeSensitivity * Time.deltaTime, 0);
-                HelixTwo.transform.Rotate(0, -userInput.deltaPosition.x * swipeSensitivity * Time.deltaTime, 0);
+                HelixOne.transform.Rotate(0, -userInput.deltaPosition.x * SwipeSensitivity * Time.deltaTime, 0);
+                // HelixTwo.transform.Rotate(0, -userInput.deltaPosition.x * swipeSensitivity * Time.deltaTime, 0);
             }
         }
     }
