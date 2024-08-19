@@ -34,7 +34,7 @@ public class BallBehavior : MonoBehaviour
         if (ignoreNextCollision) return;
 
         // Start the level reset if the player has hit a kill part.
-        KillPart _killPart = collision.transform.GetComponent<KillPart>();
+        KillSlice _killPart = collision.transform.GetComponent<KillSlice>();
         if (_killPart) 
         {
             _killPart.KillPartHit();

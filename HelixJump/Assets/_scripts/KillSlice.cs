@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KillPart : MonoBehaviour
+public class KillSlice : MonoBehaviour
 {
     private void OnEnable()
     {

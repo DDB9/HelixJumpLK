@@ -9,7 +9,7 @@ public class Platform
     public int SliceCount = 11;
 
     [Range(0f, 11f)]
-    public int KillPartCount = 1;
+    public int KillSliceCount = 1;
 }
 
 [CreateAssetMenu(fileName = "New Level")]

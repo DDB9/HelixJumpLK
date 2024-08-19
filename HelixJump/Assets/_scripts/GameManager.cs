@@ -80,8 +80,29 @@ public class GameManager : MonoBehaviour
             int _slicesToDisable = 12 - _level.Platforms[i].SliceCount;
             List<GameObject> _inactiveParts = new List<GameObject>();
 
+            // Keep disabling parts until the specified amount per platform has been reached.
             while (_inactiveParts.Count < _slicesToDisable)
             {
+                GameObject _randomPart = _platform.transform.GetChild(Random.Range(0, _platform.transform.childCount)).gameObject;
+                _randomPart.SetActive(false);
+                if (!_inactiveParts.Contains(_randomPart)) _inactiveParts.Add(_randomPart);
+            }
+
+            // Color the level according to its level variables.
+            List<GameObject> _remainingParts = new List<GameObject>();
+            foreach (Transform t in _platform.transform)
+            {
+                t.GetComponent<Renderer>().material.color = AllLevels[i].LevelPlatformColor;
+                if (t.gameObject.activeInHierarchy) _remainingParts.Add(t.gameObject);
+            }
+
+            // Then finally place the kill slices randomly between the remaining slices.
+            List<GameObject> _killSlices = new List<GameObject>();
+            while (_killSlices.Count < _level.Platforms[i].KillSliceCount)
+            {
+                GameObject _randomPart = _remainingParts[(Random.Range(0, _remainingParts.Count))];
+                if (!_killSlices.Contains(_randomPart)) _randomPart.gameObject.AddComponent<KillSlice>();
+                _killSlices.Add(_randomPart);
             }
 
             Platforms.Add(_platform);
