@@ -69,6 +69,8 @@ public class GameManager : MonoBehaviour
         // Then create the new platforms
         float _platformDistance = helixLength / _level.Platforms.Count; // calculate the distance between platforms.
         float _spawnPositionY = FirstPlatformTransform.localPosition.y; // define first platform spawn location.
+        
+        // Loop through each platform individually.
         for (int i = 0; i < _level.Platforms.Count; i++)
         {
             _spawnPositionY -= _platformDistance;
@@ -84,32 +86,32 @@ public class GameManager : MonoBehaviour
             // Keep disabling parts until the specified amount per platform has been reached.
             while (_inactiveParts.Count < _slicesToDisable)
             {
-                GameObject _randomPart = _platform.transform.GetChild(Random.Range(0, _platform.transform.childCount)).gameObject;
-                GameObject _randomPartTwo = _platformTwo.transform.GetChild(Random.Range(0, _platformTwo.transform.childCount)).gameObject;
-                _randomPart.SetActive(false);
-                _randomPartTwo.SetActive(false);
-                if (!_inactiveParts.Contains(_randomPart)) _inactiveParts.Add(_randomPart);
-                if (!_inactiveParts.Contains(_randomPartTwo)) _inactiveParts.Add(_randomPartTwo);
+                GameObject _randomSlice = _platform.transform.GetChild(Random.Range(0, _platform.transform.childCount)).gameObject;
+                GameObject _randomSliceTwo = _platformTwo.transform.GetChild(Random.Range(0, _platformTwo.transform.childCount)).gameObject;
+                _randomSlice.SetActive(false);
+                _randomSliceTwo.SetActive(false);
+                if (!_inactiveParts.Contains(_randomSlice)) _inactiveParts.Add(_randomSlice);
+                if (!_inactiveParts.Contains(_randomSliceTwo)) _inactiveParts.Add(_randomSliceTwo);
             }
-
            
             // Color the level according to its level variables.
             List<GameObject> _remainingParts = new List<GameObject>();
             foreach (Transform t in _platform.transform)
             {
-                if (!t.CompareTag("ScoreCollider"))
-                {
-                    t.GetComponent<Renderer>().material.color = AllLevels[pLevelIndex].LevelPlatformColor;
-                    if (t.gameObject.activeInHierarchy) _remainingParts.Add(t.gameObject);
-                }
+                t.GetComponent<Renderer>().material.color = AllLevels[pLevelIndex].LevelPlatformColor;
+                if (t.gameObject.activeInHierarchy) _remainingParts.Add(t.gameObject);
             }
             foreach (Transform t in _platformTwo.transform)
             {
-                if (!t.CompareTag("ScoreCollider"))
-                {
-                    t.GetComponent<Renderer>().material.color = AllLevels[pLevelIndex].LevelPlatformColor;
-                    if (t.gameObject.activeInHierarchy) _remainingParts.Add(t.gameObject);
-                }
+                t.GetComponent<Renderer>().material.color = AllLevels[pLevelIndex].LevelPlatformColor;
+                if (t.gameObject.activeInHierarchy) _remainingParts.Add(t.gameObject);
+            }
+
+            if (_level.Platforms[i].PowerupPresent)
+            {
+                GameObject _randomSlice = _platform.transform.GetChild(Random.Range(0, _platform.transform.childCount)).GetChild(0).gameObject;
+                _randomSlice.SetActive(true);
+                if (_remainingParts.Contains(_randomSlice)) _remainingParts.Remove(_randomSlice);
             }
 
             // Then finally place the kill slices randomly between the remaining slices.

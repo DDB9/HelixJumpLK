@@ -17,25 +17,37 @@ MonoBehaviour:
   Platforms:
   - SliceCount: 9
     KillSliceCount: 0
+    PowerupPresent: 0
   - SliceCount: 9
     KillSliceCount: 0
+    PowerupPresent: 0
   - SliceCount: 8
     KillSliceCount: 0
+    PowerupPresent: 1
   - SliceCount: 6
     KillSliceCount: 0
+    PowerupPresent: 0
   - SliceCount: 8
     KillSliceCount: 0
+    PowerupPresent: 0
   - SliceCount: 6
     KillSliceCount: 0
+    PowerupPresent: 0
   - SliceCount: 7
     KillSliceCount: 0
+    PowerupPresent: 0
   - SliceCount: 5
     KillSliceCount: 0
+    PowerupPresent: 0
   - SliceCount: 7
     KillSliceCount: 0
+    PowerupPresent: 0
   - SliceCount: 8
     KillSliceCount: 0
+    PowerupPresent: 0
   - SliceCount: 5
     KillSliceCount: 0
+    PowerupPresent: 0
   - SliceCount: 7
     KillSliceCount: 0
+    PowerupPresent: 0

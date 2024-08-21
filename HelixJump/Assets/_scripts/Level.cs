@@ -10,6 +10,8 @@ public class Platform
 
     [Range(0f, 11f)]
     public int KillSliceCount = 1;
+
+    public bool PowerupPresent = false;
 }
 
 [CreateAssetMenu(fileName = "New Level")]

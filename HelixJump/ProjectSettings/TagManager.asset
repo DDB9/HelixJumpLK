@@ -4,8 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - New tag
   - ScoreCollider
+  - Powerup
+  - finish
   layers:
   - Default
   - TransparentFX

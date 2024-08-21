@@ -48,7 +48,7 @@ public class BallBehavior : MonoBehaviour
         Invoke(nameof(AllowCollision), 0.2f);
 
         // If the ball reaches the end, advance to the next level.
-        if (collision.transform.CompareTag("New tag"))
+        if (collision.transform.CompareTag("finish"))
         {
             GameManager.Instance.NextLevel();
         }
@@ -61,6 +61,10 @@ public class BallBehavior : MonoBehaviour
         {
             GameManager.Instance.AddScore(3);
             other.GetComponent<Collider>().enabled = false;
+        }
+        else if (other.CompareTag("Powerup"))
+        {
+            StartCoroutine(other.GetComponent<Powerup>().ActivatePowerup());
         }
     }
 

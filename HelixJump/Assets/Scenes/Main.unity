@@ -969,7 +969,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87ea6c6b75dc3b141885cf159eaf3e9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Ball: {fileID: 393839028}
+  Ball1: {fileID: 393839028}
+  Ball2: {fileID: 1552376270}
 --- !u!1 &996899104
 GameObject:
   m_ObjectHideFlags: 0
