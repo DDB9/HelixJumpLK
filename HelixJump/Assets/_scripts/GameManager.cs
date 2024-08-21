@@ -6,15 +6,14 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    public GameObject BallOne;
-    // public GameObject BallTwo;
+    public BallBehavior BallOne, BallTwo;
     public int Score { get; private set; }
     public int HighScore { get; private set; }
 
     #region LEVEL GENEERATION VARIABLES
-    public int currentStage { get; private set; }
+    public int CurrentLevel { get; private set; }
     public Transform FirstPlatformTransform, LastPlatformTransform;
-    public GameObject Helix, PlatformPrefab;
+    public GameObject Helix, HelixTwo, PlatformPrefab;
     public List<Level> AllLevels = new List<Level>();
 
     private float helixLength;
@@ -39,7 +38,7 @@ public class GameManager : MonoBehaviour
         }
 
         HighScore = PlayerPrefs.GetInt("High Score");
-        currentStage = 0;
+        CurrentLevel = 0;
 
         // Length of the level is calculated here.
         helixLength = FirstPlatformTransform.localPosition.y - (LastPlatformTransform.localPosition.y + 0.1f);
@@ -74,7 +73,9 @@ public class GameManager : MonoBehaviour
         {
             _spawnPositionY -= _platformDistance;
             GameObject _platform = Instantiate(PlatformPrefab, Helix.transform);
+            GameObject _platformTwo = Instantiate(PlatformPrefab, HelixTwo.transform);
             _platform.transform.localPosition = new Vector3(0, _spawnPositionY, 0);
+            _platformTwo.transform.localPosition = new Vector3(0, _spawnPositionY, 0);
 
             // Disable the specified amount of slices.
             int _slicesToDisable = 12 - _level.Platforms[i].SliceCount;
@@ -84,16 +85,31 @@ public class GameManager : MonoBehaviour
             while (_inactiveParts.Count < _slicesToDisable)
             {
                 GameObject _randomPart = _platform.transform.GetChild(Random.Range(0, _platform.transform.childCount)).gameObject;
+                GameObject _randomPartTwo = _platformTwo.transform.GetChild(Random.Range(0, _platformTwo.transform.childCount)).gameObject;
                 _randomPart.SetActive(false);
+                _randomPartTwo.SetActive(false);
                 if (!_inactiveParts.Contains(_randomPart)) _inactiveParts.Add(_randomPart);
+                if (!_inactiveParts.Contains(_randomPartTwo)) _inactiveParts.Add(_randomPartTwo);
             }
 
+           
             // Color the level according to its level variables.
             List<GameObject> _remainingParts = new List<GameObject>();
             foreach (Transform t in _platform.transform)
             {
-                t.GetComponent<Renderer>().material.color = AllLevels[i].LevelPlatformColor;
-                if (t.gameObject.activeInHierarchy) _remainingParts.Add(t.gameObject);
+                if (!t.CompareTag("ScoreCollider"))
+                {
+                    t.GetComponent<Renderer>().material.color = AllLevels[pLevelIndex].LevelPlatformColor;
+                    if (t.gameObject.activeInHierarchy) _remainingParts.Add(t.gameObject);
+                }
+            }
+            foreach (Transform t in _platformTwo.transform)
+            {
+                if (!t.CompareTag("ScoreCollider"))
+                {
+                    t.GetComponent<Renderer>().material.color = AllLevels[pLevelIndex].LevelPlatformColor;
+                    if (t.gameObject.activeInHierarchy) _remainingParts.Add(t.gameObject);
+                }
             }
 
             // Then finally place the kill slices randomly between the remaining slices.
@@ -104,22 +120,27 @@ public class GameManager : MonoBehaviour
                 if (!_killSlices.Contains(_randomPart)) _randomPart.gameObject.AddComponent<KillSlice>();
                 _killSlices.Add(_randomPart);
             }
-
+            
             Platforms.Add(_platform);
+            Platforms.Add(_platformTwo);
         }
     }
 
+    // Reset the ball and load the next stage.
     public void NextLevel()
     {
-        currentStage += 1;
-        Application.Quit(); // TEMP
+        CurrentLevel++;
+        BallOne.ResetBall();
+        BallTwo.ResetBall();
+        LoadLevel(CurrentLevel);
     }
 
+    // Reset the score and ball, then reload the current level.
     public void RestartLevel()
     {
         Score = 0;
-        BallOne.GetComponent<BallBehavior>().ResetBall();
-        // BallTwo.GetComponent<BallBehavior>().ResetBall();
+        BallOne.ResetBall();
+        BallTwo.ResetBall();
     }
 
     // Some basic scoring functionality

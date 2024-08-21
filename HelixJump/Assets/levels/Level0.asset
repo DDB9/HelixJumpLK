@@ -15,27 +15,27 @@ MonoBehaviour:
   LevelBGColor: {r: 1, g: 0.9490197, b: 0.5803922, a: 1}
   LevelPlatformColor: {r: 0.43529412, g: 1, b: 0.42745098, a: 1}
   Platforms:
-  - SliceCount: 11
-    KillPartCount: 0
   - SliceCount: 9
-    KillPartCount: 0
-  - SliceCount: 10
-    KillPartCount: 0
+    KillSliceCount: 0
   - SliceCount: 9
-    KillPartCount: 0
-  - SliceCount: 11
-    KillPartCount: 0
-  - SliceCount: 10
-    KillPartCount: 0
-  - SliceCount: 11
-    KillPartCount: 0
-  - SliceCount: 11
-    KillPartCount: 0
-  - SliceCount: 10
-    KillPartCount: 0
-  - SliceCount: 9
-    KillPartCount: 0
+    KillSliceCount: 0
   - SliceCount: 8
-    KillPartCount: 0
-  - SliceCount: 10
-    KillPartCount: 0
+    KillSliceCount: 0
+  - SliceCount: 6
+    KillSliceCount: 0
+  - SliceCount: 8
+    KillSliceCount: 0
+  - SliceCount: 6
+    KillSliceCount: 0
+  - SliceCount: 7
+    KillSliceCount: 0
+  - SliceCount: 5
+    KillSliceCount: 0
+  - SliceCount: 7
+    KillSliceCount: 0
+  - SliceCount: 8
+    KillSliceCount: 0
+  - SliceCount: 5
+    KillSliceCount: 0
+  - SliceCount: 7
+    KillSliceCount: 0

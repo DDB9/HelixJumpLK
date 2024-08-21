@@ -57,10 +57,10 @@ public class BallBehavior : MonoBehaviour
     // If the ball passes through a score collider, add score.
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("New tag (1)"))
+        if (other.CompareTag("ScoreCollider"))
         {
             GameManager.Instance.AddScore(3);
-            other.gameObject.SetActive(false);
+            other.GetComponent<Collider>().enabled = false;
         }
     }
 

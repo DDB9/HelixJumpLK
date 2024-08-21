@@ -20,7 +20,7 @@ public class InputManager : MonoBehaviour
             {
                 // Apply the rotation conform the user's swipe input (delta position).
                 HelixOne.transform.Rotate(0, -userInput.deltaPosition.x * SwipeSensitivity * Time.deltaTime, 0);
-                // HelixTwo.transform.Rotate(0, -userInput.deltaPosition.x * swipeSensitivity * Time.deltaTime, 0);
+                HelixTwo.transform.Rotate(0, -userInput.deltaPosition.x * SwipeSensitivity * Time.deltaTime, 0);
             }
         }
     }
