@@ -4,7 +4,11 @@ using System;
 public class BallBehavior : MonoBehaviour
 {
     [NonSerialized] public float LowestY;
+<<<<<<< HEAD
 
+=======
+    public bool ShieldActive;
+>>>>>>> parent of f03a4bf... [+] Added an end game screen so that the app no longer closes itself after the player has completed the game.
 
     private Rigidbody rb;
     private bool ignoreNextCollision;
