@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Shield : Powerup
+public class Key : Powerup
 {
     public override IEnumerator ActivatePowerup()
     {
@@ -11,16 +11,10 @@ public class Shield : Powerup
         BallBehavior[] _balls = FindObjectsByType<BallBehavior>(FindObjectsSortMode.None);
         foreach (BallBehavior ball in _balls)
         {
-            if (!ball.ShieldActive) ball.ShieldActive = true;
-        }
-
-        yield return new WaitForSeconds(PowerupDuration);
-
-        foreach (BallBehavior ball in _balls)
-        {
-            if (ball.ShieldActive) ball.ShieldActive = false;
+            if (!ball.HasKey) ball.HasKey = true;
         }
 
         DeactivatePowerup();
+        yield return null;
     }
 }

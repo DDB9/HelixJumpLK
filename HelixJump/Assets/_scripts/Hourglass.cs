@@ -9,7 +9,6 @@ public class Hourglass : Powerup
     public override IEnumerator ActivatePowerup()
     {
         if (!GameManager.Instance.ActivePowerups.Contains(this)) GameManager.Instance.ActivePowerups.Add(this);
-
         transform.GetChild(0).gameObject.SetActive(false);
 
         Time.timeScale = TimeScale;

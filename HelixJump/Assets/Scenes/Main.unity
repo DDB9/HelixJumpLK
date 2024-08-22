@@ -397,6 +397,7 @@ MonoBehaviour:
   Helix: {fileID: 1263142331}
   HelixTwo: {fileID: 611068025}
   PlatformPrefab: {fileID: 4292348322445449354, guid: b74f86bfdb52f2e4ca03eea394bf70b1, type: 3}
+  GatePrefab: {fileID: 4292348322445449354, guid: d2697a16f5050d04fa6dbb995f0899b1, type: 3}
   AllLevels:
   - {fileID: 11400000, guid: b2660b9ac1ced9a42ab4ffeddd2aa94f, type: 2}
   - {fileID: 11400000, guid: 4357115791bda224ebb99ec4ee43656d, type: 2}

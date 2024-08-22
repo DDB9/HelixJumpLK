@@ -6,6 +6,7 @@ public class BallBehavior : MonoBehaviour
     [NonSerialized] public float LowestY;
     [NonSerialized] public bool ShieldActive;
     [NonSerialized] public bool IsFinished = false;
+    [NonSerialized] public bool HasKey = false;
 
     private Rigidbody rb;
     private bool ignoreNextCollision;
@@ -72,6 +73,12 @@ public class BallBehavior : MonoBehaviour
             IsFinished = true;
             ignoreNextCollision = true;
         }
+        // Else, if it collides with a gate, and the player has collected the key, open the gate.
+        else if (collision.transform.CompareTag("gate") && HasKey)
+        {
+            collision.transform.parent.gameObject.SetActive(false);
+            HasKey = false;
+        }
     }
 
     // If the ball passes through a score collider, add score.
@@ -83,7 +90,7 @@ public class BallBehavior : MonoBehaviour
             GameManager.Instance.AddScore(3);
             other.GetComponent<Collider>().enabled = false;
         }
-        else if (other.CompareTag("Powerup"))
+        else if (other.CompareTag("Powerup") || other.CompareTag("key"))
         {
             StartCoroutine(other.GetComponentInParent<Powerup>().ActivatePowerup());
         }
