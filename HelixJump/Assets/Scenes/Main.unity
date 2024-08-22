@@ -295,6 +295,9 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b1c88fceaf702e459a3dddef0ccce4f, type: 3}
+<<<<<<< HEAD
+>>>>>>> parent of f03a4bf... [+] Added an end game screen so that the app no longer closes itself after the player has completed the game.
+=======
 >>>>>>> parent of f03a4bf... [+] Added an end game screen so that the app no longer closes itself after the player has completed the game.
 --- !u!1 &264145878
 GameObject:
@@ -357,8 +360,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
 <<<<<<< HEAD
+<<<<<<< HEAD
   BallOne: {fileID: 393839028}
   BallTwo: {fileID: 1552376270}
+=======
+  BallOne: {fileID: 1352516184}
+  BallTwo: {fileID: 1769686663}
+>>>>>>> parent of f03a4bf... [+] Added an end game screen so that the app no longer closes itself after the player has completed the game.
 =======
   BallOne: {fileID: 1352516184}
   BallTwo: {fileID: 1769686663}
@@ -1906,6 +1914,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfbb1c44d106f244086b9fcd05a87440, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
+>>>>>>> parent of f03a4bf... [+] Added an end game screen so that the app no longer closes itself after the player has completed the game.
+=======
 >>>>>>> parent of f03a4bf... [+] Added an end game screen so that the app no longer closes itself after the player has completed the game.
 --- !u!1 &2031237632
 GameObject:

@@ -8,6 +8,9 @@ public class BallBehavior : MonoBehaviour
 
 =======
     public bool ShieldActive;
+<<<<<<< HEAD
+>>>>>>> parent of f03a4bf... [+] Added an end game screen so that the app no longer closes itself after the player has completed the game.
+=======
 >>>>>>> parent of f03a4bf... [+] Added an end game screen so that the app no longer closes itself after the player has completed the game.
 
     private Rigidbody rb;
