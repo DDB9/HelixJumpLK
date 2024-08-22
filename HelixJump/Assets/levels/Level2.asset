@@ -12,30 +12,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66d878a5cf367514595f9f6b314a9e17, type: 3}
   m_Name: Level2
   m_EditorClassIdentifier: 
-  LevelBGColor: {r: 1, g: 0.9490197, b: 0.5803922, a: 1}
-  LevelPlatformColor: {r: 0.43529412, g: 1, b: 0.42745098, a: 1}
+  LevelBGColor: {r: 1, g: 0.5803922, b: 0.8732636, a: 1}
+  LevelPlatformColor: {r: 0.427451, g: 0.5195439, b: 1, a: 1}
   Platforms:
   - SliceCount: 10
-    KillPartCount: 3
+    KillSliceCount: 2
+    PowerupPresent: 0
   - SliceCount: 9
-    KillPartCount: 2
+    KillSliceCount: 2
+    PowerupPresent: 1
   - SliceCount: 11
-    KillPartCount: 0
+    KillSliceCount: 3
+    PowerupPresent: 0
   - SliceCount: 10
-    KillPartCount: 2
+    KillSliceCount: 3
+    PowerupPresent: 0
   - SliceCount: 11
-    KillPartCount: 2
-  - SliceCount: 11
-    KillPartCount: 1
+    KillSliceCount: 2
+    PowerupPresent: 0
   - SliceCount: 9
-    KillPartCount: 2
-  - SliceCount: 10
-    KillPartCount: 1
-  - SliceCount: 10
-    KillPartCount: 3
-  - SliceCount: 9
-    KillPartCount: 2
+    KillSliceCount: 1
+    PowerupPresent: 0
   - SliceCount: 8
-    KillPartCount: 2
-  - SliceCount: 10
-    KillPartCount: 1
+    KillSliceCount: 2
+    PowerupPresent: 0
+  - SliceCount: 9
+    KillSliceCount: 2
+    PowerupPresent: 0
+  - SliceCount: 9
+    KillSliceCount: 3
+    PowerupPresent: 0
+  - SliceCount: 9
+    KillSliceCount: 3
+    PowerupPresent: 1
+  - SliceCount: 7
+    KillSliceCount: 1
+    PowerupPresent: 0
+  - SliceCount: 9
+    KillSliceCount: 4
+    PowerupPresent: 0
