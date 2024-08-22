@@ -5,7 +5,6 @@ public class BallBehavior : MonoBehaviour
 {
     [NonSerialized] public float LowestY;
     public bool ShieldActive;
-    [NonSerialized] public bool IsFinished = false;
 
     private Rigidbody rb;
     private bool ignoreNextCollision;
@@ -60,17 +59,13 @@ public class BallBehavior : MonoBehaviour
         rb.velocity = Vector3.zero;
         rb.AddForce(Vector3.up, ForceMode.Impulse);
 
-        if (!IsFinished)
-        {
-            ignoreNextCollision = true;
-            Invoke(nameof(AllowCollision), 0.2f);
-        }
+        ignoreNextCollision = true;
+        Invoke(nameof(AllowCollision), 0.2f);
 
         // If the ball reaches the end, advance to the next level.
         if (collision.transform.CompareTag("finish"))
         {
-            IsFinished = true;
-            ignoreNextCollision = true;
+            GameManager.Instance.NextLevel();
         }
     }
 
@@ -89,18 +84,14 @@ public class BallBehavior : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Prevent the ball from colliding with 2 platforms at the same time, resulting in a bounce twice as high.
-    /// </summary>
+    // Prevent the ball from colliding with 2 platforms at the same time, resulting in a bounce twice as high.
     // This can happen when the ball bounces exactly on the border of 2 platforms.
-    public void AllowCollision() 
+    private void AllowCollision() 
     { 
         ignoreNextCollision = false; 
     }
 
-    /// <summary>
-    /// Resets the ball, as well as the lowest Y position for the camera.
-    /// </summary>
+    // Reset both the ball, as well as the lowest Y position for the camera.
     public void ResetBall()
     {
         transform.position = startPosition;
