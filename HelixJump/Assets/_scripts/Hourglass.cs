@@ -4,10 +4,18 @@ using UnityEngine;
 
 public class Hourglass : Powerup
 {
+    public float TimeScale;
+
     public override IEnumerator ActivatePowerup()
     {
-        Time.timeScale = 0.5f;
-        yield return new WaitForSeconds(PowerupDuration);
+        if (!GameManager.Instance.ActivePowerups.Contains(this)) GameManager.Instance.ActivePowerups.Add(this);
+
+        transform.GetChild(0).gameObject.SetActive(false);
+
+        Time.timeScale = TimeScale;
+        yield return new WaitForSeconds(TimeScale / PowerupDuration + 1);
         Time.timeScale = 1.0f;
+
+        DeactivatePowerup();
     }
 }
