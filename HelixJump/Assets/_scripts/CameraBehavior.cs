@@ -14,6 +14,7 @@ public class CameraBehavior : MonoBehaviour
 
     private void Update()
     {
+        // TODO Modify later on so that it works with the lowest y position of the ball that is currently highest up.
         Vector3 _currentPosition1 = transform.position;
         Vector3 _currentPosition2 = transform.position;
         _currentPosition1.y = Ball1.LowestY + offset;

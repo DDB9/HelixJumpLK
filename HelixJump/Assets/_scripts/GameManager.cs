@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
         }
         catch (System.Exception)
         {
-            GameEndScreen.SetActive(true);
+            GameEndScreen.SetActive(true); // Activate the end screen if there are no more levels to complete.
             return;
         }
 
@@ -123,34 +123,30 @@ public class GameManager : MonoBehaviour
             }
            
             // Color the level according to its level variables.
-            List<GameObject> _remainingSlices = new List<GameObject>();
+            List<GameObject> _remainingParts = new List<GameObject>();
             foreach (Transform t in _platform.transform)
             {
                 t.GetComponent<Renderer>().material.color = AllLevels[pLevelIndex].LevelPlatformColor;
-                if (t.gameObject.activeInHierarchy) _remainingSlices.Add(t.gameObject);
+                if (t.gameObject.activeInHierarchy) _remainingParts.Add(t.gameObject);
             }
-
             foreach (Transform t in _platformTwo.transform)
             {
                 t.GetComponent<Renderer>().material.color = AllLevels[pLevelIndex].LevelPlatformColor;
-                if (t.gameObject.activeInHierarchy) _remainingSlices.Add(t.gameObject);
+                if (t.gameObject.activeInHierarchy) _remainingParts.Add(t.gameObject);
             }
 
-            // Spawn random powerups.
             if (_level.Platforms[i].PowerupPresent)
             {
-                // choose a random powerup (all children of the slices).
-                GameObject _randomSlice = _remainingSlices[Random.Range(0, _remainingSlices.Count - 1)];
-                GameObject _powerup = _randomSlice.transform.GetChild(Random.Range(0, _randomSlice.transform.childCount)).gameObject;
-                _powerup.SetActive(true);
-                if (_remainingSlices.Contains(_randomSlice)) _remainingSlices.Remove(_randomSlice);
+                GameObject _randomSlice = _platform.transform.GetChild(Random.Range(0, _platform.transform.childCount)).GetChild(0).gameObject;
+                _randomSlice.SetActive(true);
+                if (_remainingParts.Contains(_randomSlice)) _remainingParts.Remove(_randomSlice);
             }
 
             // Then finally place the kill slices randomly between the remaining slices.
             List<GameObject> _killSlices = new List<GameObject>();
             while (_killSlices.Count < _level.Platforms[i].KillSliceCount)
             {
-                GameObject _randomPart = _remainingSlices[Random.Range(0, _remainingSlices.Count - 1)];
+                GameObject _randomPart = _remainingParts[(Random.Range(0, _remainingParts.Count))];
                 if (!_killSlices.Contains(_randomPart)) _randomPart.gameObject.AddComponent<KillSlice>();
                 _killSlices.Add(_randomPart);
             }
@@ -176,8 +172,6 @@ public class GameManager : MonoBehaviour
         Score = 0;
         BallOne.ResetBall();
         BallTwo.ResetBall();
-
-        foreach (Powerup p in ActivePowerups) p.ResetPowerup();
     }
 
     // Some basic scoring functionality
