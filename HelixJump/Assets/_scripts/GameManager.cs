@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public BallBehavior BallOne, BallTwo;
     public int Score { get; private set; }
     public int HighScore { get; private set; }
+    public List<Powerup> ActivePowerups = new List<Powerup>();
 
     #region LEVEL GENEERATION VARIABLES
     public int CurrentLevel;
@@ -83,7 +84,7 @@ public class GameManager : MonoBehaviour
         }
         catch (System.Exception)
         {
-            GameEndScreen.SetActive(true);
+            GameEndScreen.SetActive(true); // Activate the end screen if there are no more levels to complete.
             return;
         }
 

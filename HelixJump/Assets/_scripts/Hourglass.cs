@@ -7,7 +7,7 @@ public class Hourglass : Powerup
     public override IEnumerator ActivatePowerup()
     {
         Time.timeScale = 0.5f;
-        yield return new WaitForSeconds(PowerupDutaion);
+        yield return new WaitForSeconds(PowerupDuration);
         Time.timeScale = 1.0f;
     }
 }

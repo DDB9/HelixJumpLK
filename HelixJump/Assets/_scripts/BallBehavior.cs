@@ -4,7 +4,7 @@ using System;
 public class BallBehavior : MonoBehaviour
 {
     [NonSerialized] public float LowestY;
-    public bool ShieldActive;
+    [NonSerialized] public bool ShieldActive;
     [NonSerialized] public bool IsFinished = false;
 
     private Rigidbody rb;
