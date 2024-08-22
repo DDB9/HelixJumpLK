@@ -1,18 +1,18 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    public GameObject GameEndScreen;
     public BallBehavior BallOne, BallTwo;
     public int Score { get; private set; }
     public int HighScore { get; private set; }
     public List<Powerup> ActivePowerups = new List<Powerup>();
 
     #region LEVEL GENEERATION VARIABLES
-    public int CurrentLevel { get; private set; }
+    public int CurrentLevel;
     public Transform FirstPlatformTransform, LastPlatformTransform;
     public GameObject Helix, HelixTwo, PlatformPrefab;
     public List<Level> AllLevels = new List<Level>();
@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
 
         HighScore = PlayerPrefs.GetInt("High Score");
         CurrentLevel = 0;
+        GameEndScreen.SetActive(false);
 
         // Length of the level is calculated here.
         helixLength = FirstPlatformTransform.localPosition.y - (LastPlatformTransform.localPosition.y + 0.1f);
@@ -49,7 +50,24 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    // This takes care of the level generation.
+    private void Update()
+    {
+        if (BallOne.IsFinished && BallTwo.IsFinished)
+        {
+            NextLevel();
+            
+            BallOne.IsFinished = false;
+            BallOne.AllowCollision();
+
+            BallTwo.IsFinished = false;
+            BallTwo.AllowCollision();
+        }
+    }
+
+    /// <summary>
+    /// Generates a level corresponding to the given level index parameter.
+    /// </summary>
+    /// <param name="pLevelIndex">Level to load.</param>
     public void LoadLevel(int pLevelIndex)
     {
         Level _level = AllLevels[Mathf.Clamp(pLevelIndex, 0, AllLevels.Count -1)];
@@ -58,8 +76,17 @@ public class GameManager : MonoBehaviour
             Debug.LogError("No level " + pLevelIndex + " was found. Please make sure all levels are assigned in " + this.name);
             return;
         }
+        CurrentLevel = pLevelIndex;
 
-        Camera.main.backgroundColor = AllLevels[pLevelIndex].LevelBGColor;  // Change camera background color.
+        try
+        {
+            Camera.main.backgroundColor = AllLevels[pLevelIndex].LevelBGColor;  // Change camera background color.
+        }
+        catch (System.Exception)
+        {
+            GameEndScreen.SetActive(true);
+            return;
+        }
 
         // Reset Helix rotation.
         Helix.transform.eulerAngles = HelixStartRotation;
@@ -139,6 +166,7 @@ public class GameManager : MonoBehaviour
         CurrentLevel++;
         BallOne.ResetBall();
         BallTwo.ResetBall();
+
         LoadLevel(CurrentLevel);
     }
 
