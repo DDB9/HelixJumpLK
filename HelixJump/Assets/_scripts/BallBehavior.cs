@@ -4,8 +4,7 @@ using System;
 public class BallBehavior : MonoBehaviour
 {
     [NonSerialized] public float LowestY;
-    [NonSerialized] public bool ShieldActive;
-    [NonSerialized] public bool IsFinished = false;
+    public bool ShieldActive;
 
     private Rigidbody rb;
     private bool ignoreNextCollision;
@@ -20,12 +19,23 @@ public class BallBehavior : MonoBehaviour
 
     private void Update()
     {
-        // Variable with data to be transferred to the camera so it is always positioned at the lowest point the ball has reached.
-        // This ensures that the camera will always show a clear overview of the level and player.
-        // TODO Check later with 2 balls if this is still a viable option.
+        // Variable with data to be transferred to the camera so it is always positioned at the lowest point of the ball that is currently highest up.
+        // This ensures that the player will not loose sight of the ball that is behind, making it impossible to move down with said ball.
         if (transform.position.y < LowestY)
         {
             LowestY = transform.position.y;
+        }
+        transform.LookAt(Camera.main.transform.position);
+
+        // Enable the shield sprite once if the shield is active and disable it once when not. 
+        // Doing it once increases performance.
+        if (ShieldActive && !transform.GetChild(0).GetComponent<SpriteRenderer>().enabled)
+        {
+            transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = true;
+        }
+        else if (!ShieldActive && transform.GetChild(0).GetComponent<SpriteRenderer>().enabled)
+        {
+            transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
         }
     }
 
@@ -35,31 +45,32 @@ public class BallBehavior : MonoBehaviour
         if (ignoreNextCollision) return;
 
         // Start the level reset if the player has hit a kill part.
-        KillSlice _killPart = collision.transform.GetComponent<KillSlice>();
-        if (_killPart) 
+        KillSlice _killSlice = collision.transform.GetComponent<KillSlice>();
+        if (_killSlice && !ShieldActive) 
         {
-            _killPart.KillPartHit();
+            _killSlice.KillPartHit();
+        }
+        else if (_killSlice && ShieldActive)
+        {
+            ShieldActive = false;
         }
 
         // bounce... bounce... bounce...
         rb.velocity = Vector3.zero;
         rb.AddForce(Vector3.up, ForceMode.Impulse);
 
-        if (!IsFinished)
-        {
-            ignoreNextCollision = true;
-            Invoke(nameof(AllowCollision), 0.2f);
-        }
+        ignoreNextCollision = true;
+        Invoke(nameof(AllowCollision), 0.2f);
 
         // If the ball reaches the end, advance to the next level.
         if (collision.transform.CompareTag("finish"))
         {
-            IsFinished = true;
-            ignoreNextCollision = true;
+            GameManager.Instance.NextLevel();
         }
     }
 
     // If the ball passes through a score collider, add score.
+    // Else if the ball passes through a powerup, active that powerup.
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("ScoreCollider"))
@@ -69,22 +80,18 @@ public class BallBehavior : MonoBehaviour
         }
         else if (other.CompareTag("Powerup"))
         {
-            StartCoroutine(other.GetComponent<Powerup>().ActivatePowerup());
+            StartCoroutine(other.GetComponentInParent<Powerup>().ActivatePowerup());
         }
     }
 
-    /// <summary>
-    /// Prevent the ball from colliding with 2 platforms at the same time, resulting in a bounce twice as high.
-    /// </summary>
+    // Prevent the ball from colliding with 2 platforms at the same time, resulting in a bounce twice as high.
     // This can happen when the ball bounces exactly on the border of 2 platforms.
-    public void AllowCollision() 
+    private void AllowCollision() 
     { 
         ignoreNextCollision = false; 
     }
 
-    /// <summary>
-    /// Resets the ball, as well as the lowest Y position for the camera.
-    /// </summary>
+    // Reset both the ball, as well as the lowest Y position for the camera.
     public void ResetBall()
     {
         transform.position = startPosition;
