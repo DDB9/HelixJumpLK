@@ -18,36 +18,48 @@ MonoBehaviour:
   - SliceCount: 10
     KillSliceCount: 2
     PowerupPresent: 0
+    Gate: 0
   - SliceCount: 9
     KillSliceCount: 2
-    PowerupPresent: 1
+    PowerupPresent: 0
+    Gate: 1
   - SliceCount: 11
     KillSliceCount: 3
-    PowerupPresent: 0
+    PowerupPresent: 1
+    Gate: 0
   - SliceCount: 10
     KillSliceCount: 3
     PowerupPresent: 0
+    Gate: 0
   - SliceCount: 11
     KillSliceCount: 2
     PowerupPresent: 0
+    Gate: 0
   - SliceCount: 9
     KillSliceCount: 1
     PowerupPresent: 0
+    Gate: 0
   - SliceCount: 8
     KillSliceCount: 2
     PowerupPresent: 0
+    Gate: 1
   - SliceCount: 9
     KillSliceCount: 2
     PowerupPresent: 0
+    Gate: 0
   - SliceCount: 9
     KillSliceCount: 3
     PowerupPresent: 0
+    Gate: 0
   - SliceCount: 9
     KillSliceCount: 3
     PowerupPresent: 1
+    Gate: 0
   - SliceCount: 7
     KillSliceCount: 1
     PowerupPresent: 0
+    Gate: 0
   - SliceCount: 9
     KillSliceCount: 4
     PowerupPresent: 0
+    Gate: 0

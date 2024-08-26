@@ -6,13 +6,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI ScoreText;
     [SerializeField] private TextMeshProUGUI HighScoreText;
 
-    private void Update()
-    {
-        // VERY simple score system.
-        ScoreText.text = GameManager.Instance.Score.ToString();
-        HighScoreText.text = "High Score: " + GameManager.Instance.HighScore.ToString();
-    }
-
     public void PlayAgain()
     {
         GameManager.Instance.GameEndScreen.SetActive(false);
@@ -20,4 +13,6 @@ public class UIManager : MonoBehaviour
     }
 
     public void QuitGame() { Application.Quit(); }
+
+    public void RestartLevel() { GameManager.Instance.RestartLevel(); }
 }

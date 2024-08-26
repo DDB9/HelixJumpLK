@@ -1,4 +1,4 @@
-using NUnit.Framework.Internal;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject GameEndScreen;
     public BallBehavior BallOne, BallTwo;
+    [NonSerialized] public List<GameObject> Gates = new List<GameObject>();
     public int Score { get; private set; }
     public int HighScore { get; private set; }
     public List<Powerup> ActivePowerups = new List<Powerup>();
@@ -99,6 +100,7 @@ public class GameManager : MonoBehaviour
         float _platformDistance = helixLength / _level.Platforms.Count; // calculate the distance between platforms.
         float _spawnPositionY = FirstPlatformTransform.localPosition.y; // define first platform spawn location.
 
+
         // Loop through each platform individually.
         for (int i = 0; i < _level.Platforms.Count; i++)
         {
@@ -117,6 +119,7 @@ public class GameManager : MonoBehaviour
             {
                 _gate = Instantiate(GatePrefab, Helix.transform);
                 _gate.transform.localPosition = new Vector3(0, _spawnPositionY, 0);
+                Gates.Add(_gate);
 
                 goto HelixTwo;
             }
@@ -132,7 +135,7 @@ public class GameManager : MonoBehaviour
             // Keep disabling parts until the specified amount per platform has been reached.
             while (_inactiveParts.Count < _slicesToDisable)
             {
-                GameObject _randomSlice = _platform.transform.GetChild(Random.Range(0, _platform.transform.childCount)).gameObject;
+                GameObject _randomSlice = _platform.transform.GetChild(UnityEngine.Random.Range(0, _platform.transform.childCount)).gameObject;
                 _randomSlice.SetActive(false);
                 if (!_inactiveParts.Contains(_randomSlice)) _inactiveParts.Add(_randomSlice);
             }
@@ -144,7 +147,6 @@ public class GameManager : MonoBehaviour
                 if (t.gameObject.activeInHierarchy) _remainingSlices.Add(t.gameObject);
             }
             goto HelixTwo;
- 
             #endregion
 
             #region PLATFORM GENERATION HELIX 2
@@ -161,7 +163,7 @@ public class GameManager : MonoBehaviour
                 _inactiveParts = new List<GameObject>();
                 while (_inactiveParts.Count < _slicesToDisable)
                 {
-                    GameObject _randomSliceTwo = _platformTwo.transform.GetChild(Random.Range(0, _platformTwo.transform.childCount)).gameObject;
+                    GameObject _randomSliceTwo = _platformTwo.transform.GetChild(UnityEngine.Random.Range(0, _platformTwo.transform.childCount)).gameObject;
                     _randomSliceTwo.SetActive(false);
                     if (!_inactiveParts.Contains(_randomSliceTwo)) _inactiveParts.Add(_randomSliceTwo);
                 }
@@ -179,10 +181,10 @@ public class GameManager : MonoBehaviour
             if (_level.Platforms[i].PowerupPresent)
             {
                 // choose a random powerup (all children of the slices).
-                GameObject _randomSlice = _remainingSlices[Random.Range(0, _remainingSlices.Count - 1)];
+                GameObject _randomSlice = _remainingSlices[UnityEngine.Random.Range(0, _remainingSlices.Count - 1)];
 
                 randomize:
-                    GameObject _powerup = _randomSlice.transform.GetChild(Random.Range(0, _randomSlice.transform.childCount)).gameObject;
+                    GameObject _powerup = _randomSlice.transform.GetChild(UnityEngine.Random.Range(0, _randomSlice.transform.childCount)).gameObject;
                     if (!_powerup.transform.CompareTag("key")) _powerup.SetActive(true);
                     else goto randomize;
 
@@ -192,7 +194,7 @@ public class GameManager : MonoBehaviour
             // Spawn a key for the gate (if present) on one of the remaining slices.
             if (_level.Platforms[i].Gate)
             {
-                GameObject _randomSlice = _remainingSlices[Random.Range(0, _remainingSlices.Count - 1)];
+                GameObject _randomSlice = _remainingSlices[UnityEngine.Random.Range(0, _remainingSlices.Count - 1)];
                 for (int j = 0; j < _randomSlice.transform.childCount; j++)
                 {
                     if (_randomSlice.transform.GetChild(j).CompareTag("key"))
@@ -205,11 +207,13 @@ public class GameManager : MonoBehaviour
             List<GameObject> _killSlices = new List<GameObject>();
             while (_killSlices.Count < _level.Platforms[i].KillSliceCount)
             {
-                GameObject _randomSlice = _remainingSlices[Random.Range(0, _remainingSlices.Count - 1)];
+                GameObject _randomSlice = _remainingSlices[UnityEngine.Random.Range(0, _remainingSlices.Count - 1)];
                 if (!_killSlices.Contains(_randomSlice)) _randomSlice.gameObject.AddComponent<KillSlice>();
                 _killSlices.Add(_randomSlice);
             }
             #endregion
+
+            ActivePowerups = new List<Powerup>();
 
             Platforms.Add(_platform);
             Platforms.Add(_platformTwo);
@@ -233,7 +237,12 @@ public class GameManager : MonoBehaviour
         BallOne.ResetBall();
         BallTwo.ResetBall();
 
+        // reactivate powerups and gates.
         foreach (Powerup p in ActivePowerups) p.ResetPowerup();
+        if (Gates != null)
+        {
+            foreach (GameObject g in Gates) g.SetActive(true);
+        }
     }
 
     // Some basic scoring functionality
