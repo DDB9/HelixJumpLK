@@ -6,6 +6,7 @@ public class InputManager : MonoBehaviour
     public float SwipeSensitivity;
 
     private Touch userInput;
+    private Vector2 lastTouchPosition;
 
     private void LateUpdate()
     {
@@ -23,5 +24,28 @@ public class InputManager : MonoBehaviour
                 HelixTwo.transform.Rotate(0, -userInput.deltaPosition.x * SwipeSensitivity * Time.deltaTime, 0);
             }
         }
+
+        #if UNITY_STANDALONE_WIN
+        // Input code if the game plays in windows instead of android.
+        if (Input.GetMouseButton(0))
+        {
+            Vector2 _touchPosition = Input.mousePosition;
+
+            if (_touchPosition == Vector2.zero)
+            {
+                lastTouchPosition = _touchPosition;
+            }
+            float _touchDelta = lastTouchPosition.x - _touchPosition.x;
+            lastTouchPosition = _touchPosition;
+
+            HelixOne.transform.Rotate(Vector3.up * _touchDelta);
+            HelixTwo.transform.Rotate(Vector3.up * _touchDelta);
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            lastTouchPosition = Vector2.zero;
+        }
+        #endif
     }
 }
